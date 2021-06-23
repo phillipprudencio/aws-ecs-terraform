@@ -1,3 +1,3 @@
 output "url" {
-  value = "https://${var.hostname}"
+  value = var.hostname == null ? null : "https://${var.hostname}"
 }

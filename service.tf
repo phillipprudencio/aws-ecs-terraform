@@ -12,10 +12,13 @@ resource "aws_ecs_service" "main" {
     assign_public_ip = true
   }
 
-  load_balancer {
-    target_group_arn = aws_alb_target_group.main.id
-    container_name   = var.name
-    container_port   = var.task_port
+  dynamic "load_balancer" {
+    for_each = var.no_loadbalancer ? [] : [1]
+    content {
+      target_group_arn = aws_alb_target_group.main[0].id
+      container_name   = var.name
+      container_port   = var.task_port
+    }
   }
 
   depends_on = [

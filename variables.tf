@@ -11,12 +11,6 @@ variable "vpc_id" {
 variable "subnets" {
   type = list(string)
 }
-variable "hostname" {
-  type = string
-}
-variable "loadbalancer_rule_arn" {
-  type = string
-}
 variable "task_port" {
   type = number
 }
@@ -28,6 +22,18 @@ variable "tags" {
 # Optionals
 ##
 
+variable "no_loadbalancer" {
+  type = bool
+  default = false
+}
+variable "hostname" {
+  type = string
+  default = null
+}
+variable "loadbalancer_rule_arn" {
+  type = string
+  default = null
+}
 variable "container_secrets" {
   type    = any
   default = []

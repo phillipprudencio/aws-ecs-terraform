@@ -1,4 +1,5 @@
 resource "aws_alb_target_group" "main" {
+  count       = var.no_loadbalancer ? 0 : 1
   port        = var.task_port
   protocol    = var.healthcheck_protocol
   vpc_id      = var.vpc_id
