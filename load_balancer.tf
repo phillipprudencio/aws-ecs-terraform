@@ -2,10 +2,9 @@ resource "aws_lb" "ecs-elb" {
   name               = "ecs-elb-tf"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id]
+  security_groups    = aws_security_group.lb_sg.id
   subnets            = aws_subnet.public.*.id
-
-   
+ 
   tags = {
     Environment = "production"
   }
