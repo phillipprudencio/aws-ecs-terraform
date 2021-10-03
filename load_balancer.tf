@@ -5,8 +5,7 @@ resource "aws_lb" "ecs-elb" {
   security_groups    = [aws_security_group.lb_sg.id]
   subnets            = aws_subnet.public.*.id
 
-  enable_deletion_protection = no
- 
+   
   tags = {
     Environment = "production"
   }
