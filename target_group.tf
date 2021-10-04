@@ -1,4 +1,4 @@
-resource "aws_lb_target_group" "lb-target-group" {
+resource "aws_lb_target_group" "main" {
   name        = "lb-target-group"
   port        = "80"
   protocol    = "HTTP"
