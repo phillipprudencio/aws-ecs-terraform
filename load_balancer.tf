@@ -10,20 +10,12 @@ resource "aws_lb" "ecs-elb" {
   }
 }
 
-resource "aws_lb_listener_rule" "main" {
-  count = var.no_loadbalancer ? 0 : 1
-  listener_arn = var.loadbalancer_rule_arn
-
-  action {
+resource "aws_lb_listener" "web-listener" {
+  load_balancer_arn = aws_lb.test-lb.arn
+  port              = "80"
+  protocol          = "HTTP"
+  default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.main[0].arn
-  }
-
-  condition {
-    host_header {
-      values = [
-        var.hostname
-      ]
-    }
+    target_group_arn = aws_lb_target_group.lb_target_group.arn
   }
 }
