@@ -1,21 +1,15 @@
-resource "aws_alb_target_group" "main" {
-  count       = var.no_loadbalancer ? 0 : 1
-  port        = var.task_port
-  protocol    = var.healthcheck_protocol
-  vpc_id      = var.vpc_id
+resource "aws_lb_target_group" "lb_target_group" {
+  name        = "masha-target-group"
+  port        = "80"
+  protocol    = "HTTP"
   target_type = "ip"
-  tags        = var.tags
-
+  vpc_id      = data.aws_vpc.main.id
   health_check {
-    interval            = var.healthcheck_interval
-    path                = var.healthcheck_path
-    timeout             = var.healthcheck_timeout
-    matcher             = var.healthcheck_success_codes
-    healthy_threshold   = var.healthcheck_healthy_threshold
-    unhealthy_threshold = var.healthcheck_unhealthy_threshold
-  }
-
-  lifecycle {
-    create_before_destroy = true
+    path                = "/"
+    healthy_threshold   = 2
+    unhealthy_threshold = 10
+    timeout             = 60
+    interval            = 300
+    matcher             = "200,301,302"
   }
 }
