@@ -1,5 +1,5 @@
 resource "aws_lb_target_group" "lb_target_group" {
-  name        = "masha-target-group"
+  name        = "lb_target_group"
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
