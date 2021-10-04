@@ -10,11 +10,4 @@ resource "aws_lb" "ecs-elb" {
     target_group_arn = aws_alb_target_group.main[0].arn
   }
 
-  condition {
-    host_header {
-      values = [
-        var.hostname
-      ]
-    }
-  }
-}
+ }
