@@ -11,6 +11,7 @@ resource "aws_lb" "ecs-elb" {
 }
 
 resource "aws_lb_listener" "main" {
+  count = var.no_loadbalancer ? 0 : 1
   load_balancer_arn = aws_lb.ecs-elb.arn
   port              = "80"
   protocol          = "HTTP"
