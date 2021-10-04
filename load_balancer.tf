@@ -11,17 +11,9 @@ resource "aws_lb" "ecs-elb" {
 resource "aws_lb_listener_rule" "main" {
   count = var.no_loadbalancer ? 0 : 1
   listener_arn = aws_alb_target_group.arn
-
-  action {
+  default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.main[0].arn
+    target_group_arn = aws_lb_target_group.lb-target-group.arn
   }
-
-  condition {
-    host_header {
-      values = [
-        var.hostname
-      ]
-    }
-  }
+ 
 }
