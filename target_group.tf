@@ -1,15 +1,10 @@
 resource "aws_lb_target_group" "main" {
+  count = var.no_loadbalancer ? 0 : 1
   name        = "lb-target-group"
-  port        = "80"
-  protocol    = "HTTP"
-  target_type = "ip"
+  count       = var.no_loadbalancer ? 0 : 1
+  port        = var.task_port
+  protocol    = var.healthcheck_protocol
   vpc_id      = var.vpc_id
-  health_check {
-    path                = "/"
-    healthy_threshold   = 2
-    unhealthy_threshold = 10
-    timeout             = 60
-    interval            = 300
-    matcher             = "200,301,302"
-  }
+  target_type = "ip"
+  tags        = var.tags
 }
