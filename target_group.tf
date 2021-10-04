@@ -3,7 +3,7 @@ resource "aws_lb_target_group" "lb_target_group" {
   port        = "80"
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = data.aws_vpc.main.id
+  vpc_id      = var.vpc_id
   health_check {
     path                = "/"
     healthy_threshold   = 2
