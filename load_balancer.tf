@@ -9,14 +9,7 @@ resource "aws_lb" "ecs-elb" {
     Environment = "production"
   }
 }
-
-resource "aws_lb_listener" "main" {
-  count = var.no_loadbalancer ? 0 : 1
-  load_balancer_arn = aws_lb.ecs-elb.arn
-  port              = "80"
-  protocol          = "HTTP"
-  default_action {
+action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.main[0].arn
   }
-}
