@@ -6,13 +6,22 @@ resource "aws_lb" "ecs-elb" {
   subnets               = ["subnet-e5f594be", "subnet-0830be6d"] 
 
 }
-
+ 
+resource "aws_lb_listener" "main" {
+       load_balancer_arn = aws_lb.ecs-elb.arn
+       port              = "80"
+       protocol          = "HTTP"
+       default_action {
+          type             = "forward"
+          target_group_arn = aws_alb_target_group.main[0].arn
+       }
+  }
 
 resource "aws_lb_listener_rule" "main" {
   count = var.no_loadbalancer ? 0 : 1
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.lb-target-group.arn
+    target_group_arn = aws_alb_target_group.main[0].arn
   }
  
 }
