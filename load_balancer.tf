@@ -13,16 +13,16 @@ resource "aws_lb_listener" "main" {
        protocol          = "HTTP"
        default_action {
           type             = "forward"
-          target_group_arn = aws_alb_target_group.main[0].arn
+          target_group_arn = aws_alb_target_group.main.arn
        }
   }
 
 resource "aws_lb_listener_rule" "main" {
-   listener_arn = aws_alb_target_group.main[0].arn
+   listener_arn = aws_alb_target_group.main.arn
   count = var.no_loadbalancer ? 0 : 1
   default_action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.main[0].arn
+    target_group_arn = aws_alb_target_group.main.arn
   }
  
 }
